@@ -7,7 +7,7 @@ __author__ = "Jared Winter"
 __copyright__ = "Copyright 2020, jwinternet"
 __credits__ = ""
 __license__ = "GNU General Public License v3.0"
-__version__ = "0.0.1"
+__version__ = "0.0.2"
 __updated__ = "3/15/2020"
 __email__ = "jaredwinter2015@outlook.com"
 __status__ = "DEV"
@@ -28,20 +28,23 @@ with open(filename) as f:
 
 all_eq_dicts = all_eq_data['features']
 
-mags, lons, lats = [], [], []
+mags, lons, lats, hover_texts = [], [], [], []
 for eq_dict in all_eq_dicts:
 	mag = eq_dict['properties']['mag']
 	lon = eq_dict['geometry']['coordinates'][0]
 	lat = eq_dict['geometry']['coordinates'][1]
+	title = eq_dict['properties']['title']
 	mags.append(mag)
 	lons.append(lon)
 	lats.append(lat)
+	hover_texts.append(title)
 
 # Map the earthquakes.
 data = [{
 	'type':'scattergeo',
 	'lon':lons,
 	'lat':lats,
+	'text':hover_texts,
 	'marker': {
 		'size': [5 * mag for mag in mags],
 		'color': mags,
